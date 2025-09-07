@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentes Inteligentes - Póster Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .poster-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 800px;
+        }
+        
+        .section {
+            padding: 40px;
+            position: relative;
+        }
+        
+        .section:nth-child(odd) {
+            background: linear-gradient(45deg, #f8f9ff, #e8f4ff);
+        }
+        
+        .section:nth-child(even) {
+            background: linear-gradient(45deg, #fff8f8, #fff0f0);
+        }
+        
+        .section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .definition-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .definition-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .definition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .definition-card h3 {
+            color: #2980b9;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .definition-card p {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .structure-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .flow-step {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            margin: 0 5px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        
+        .robot-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .robot-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .sensors-list, .actuators-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .sensors-list h4, .actuators-list h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .sensors-list ul, .actuators-list ul {
+            list-style: none;
+        }
+        
+        .sensors-list li, .actuators-list li {
+            padding: 5px 0;
+            font-size: 0.9em;
+            border-bottom: 1px dotted #ddd;
+        }
+        
+        .sensors-list li:last-child, .actuators-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .robot-center {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 50px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+        
+        .robot-center::before {
+            content: '🤖';
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .classification-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .classification-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 3px solid #e74c3c;
+        }
+        
+        .classification-item h4 {
+            color: #c0392b;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        .classification-item p {
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .footer h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .references {
+            font-size: 0.9em;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .robot-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .classification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .highlight-box {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .highlight-box h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>AGENTES INTELIGENTES</h1>
+            <p>Investigación Colaborativa - Sistemas Perceptivos Autónomos</p>
+        </div>
+        
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Section 1: Definiciones -->
+            <div class="section">
+                <h2>
+                    <span class="icon">📚</span>
+                    Definiciones Reconocidas
+                </h2>
+                
+                <div class="definition-cards">
+                    <div class="definition-card">
+                        <h3>CEUPE - Centro Europeo de Postgrado</h3>
+                        <p>"Sistema perceptivo capaz de interpretar y procesar información del entorno, actuando racionalmente según los datos procesados."</p>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h3>Amazon Web Services (AWS)</h3>
+                        <p>"Programa de software que interactúa con su entorno, recopila datos y realiza tareas autónomas para cumplir objetivos predeterminados."</p>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h3>Google Cloud</h3>
+                        <p>"Sistemas de software que usan IA para alcanzar objetivos, mostrando razonamiento, planificación, memoria y autonomía para aprender y adaptarse."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2: Estructura -->
+            <div class="section">
+                <h2>
+                    <span class="icon">🔧</span>
+                    Estructura del Agente
+                </h2>
+                
+                <div class="structure-diagram">
+                    <h3>Ciclo de Funcionamiento</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>PERCEPCIÓN</strong><br>
+                            <small>Sensores captan información del entorno</small>
+                        </div>
+                        <div class="flow-step">
+                            <strong>RAZONAMIENTO</strong><br>
+                            <small>Procesamiento y toma de decisiones</small>
+                        </div>
+                        <div class="flow-step">
+                            <strong>ACTUACIÓN</strong><br>
+                            <small>Ejecuta acciones mediante actuadores</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>Componentes Clave</h3>
+                    <p><strong>Arquitectura:</strong> Base física/software • <strong>Función:</strong> Traducción datos-acciones • <strong>Programa:</strong> Implementación práctica</p>
+                </div>
+            </div>
+            
+            <!-- Section 3: Caso Práctico -->
+            <div class="section">
+                <h2>
+                    <span class="icon">🤖</span>
+                    Caso Práctico: Robot de Limpieza
+                </h2>
+                
+                <div class="robot-diagram">
+                    <div class="robot-container">
+                        <div class="sensors-list">
+                            <h4>🔍 SENSORES</h4>
+                            <ul>
+                                <li>📹 Cámaras de visión</li>
+                                <li>📡 Sensores proximidad</li>
+                                <li>⚠️ Sensores de caída</li>
+                                <li>🧹 Detectores suciedad</li>
+                                <li>🧭 Giroscopio/GPS</li>
+                                <li>🤚 Sensores táctiles</li>
+                                <li>🎵 Micrófono</li>
+                                <li>📶 WiFi/Conectividad</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="robot-center">
+                            <h3>UNIDAD DE PROCESAMIENTO</h3>
+                            <p>Memoria • Algoritmos • IA</p>
+                        </div>
+                        
+                        <div class="actuators-list">
+                            <h4>⚡ ACTUADORES</h4>
+                            <ul>
+                                <li>🚗 Motores movimiento</li>
+                                <li>🧭 Sistema navegación</li>
+                                <li>🧽 Cepillos limpieza</li>
+                                <li>💨 Bomba aspiración</li>
+                                <li>💡 LEDs estado</li>
+                                <li>🔊 Altavoz alertas</li>
+                                <li>📡 Comunicación WiFi</li>
+                                <li>🔋 Sistema carga</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>Proceso de Operación</h3>
+                    <p>Inicio → Exploración → Planificación → Limpieza → Adaptación → Regreso a base</p>
+                </div>
+            </div>
+            
+            <!-- Section 4: Clasificación -->
+            <div class="section">
+                <h2>
+                    <span class="icon">📊</span>
+                    Clasificación de Agentes
+                </h2>
+                
+                <div class="classification-grid">
+                    <div class="classification-item">
+                        <h4>🔄 Reactivo Simple</h4>
+                        <p>Reglas predefinidas evento-condición-acción. Ideal para tareas deterministas básicas.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <h4>🧠 Basado en Modelo</h4>
+                        <p>Mantiene modelo interno del mundo. Evalúa consecuencias antes de decidir.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <h4>🎯 Basado en Objetivos</h4>
+                        <p>Tiene metas específicas. Planifica secuencias óptimas para alcanzarlas.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <h4>📈 Basado en Utilidad</h4>
+                        <p>Optimiza resultados comparando escenarios y maximizando beneficios.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <h4>🎓 Agente que Aprende</h4>
+                        <p>Mejora continuamente. Se adapta y evoluciona con la experiencia.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <h4>👥 Sistema Multiagente</h4>
+                        <p>Múltiples agentes colaboran para resolver tareas complejas coordinadamente.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>🚀 Ventajas Clave</h3>
+                    <p><strong>Autonomía:</strong> Funcionamiento independiente • <strong>Eficiencia:</strong> Optimización continua • <strong>Adaptabilidad:</strong> Respuesta a cambios</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <h3>📖 Referencias Bibliográficas</h3>
+            <div class="references">
+                <p><strong>CEUPE.</strong> (2022). ¿Qué es un Agente Inteligente? Características, tipos y cómo funciona. Centro Europeo de Postgrado.</p>
+                <p><strong>Amazon Web Services.</strong> ¿Qué son los agentes de inteligencia artificial? AWS Documentation.</p>
+                <p><strong>Google Cloud.</strong> ¿Qué son los agentes de IA? Definición, ejemplos y tipos. Google Cloud Platform.</p>
+            </div>
+            <br>
+            <p style="font-size: 0.9em; opacity: 0.7;">
+                📅 Investigación Colaborativa - Inteligencia Artificial | 🎓 Equipo de Desarrollo Académico
+            </p>
+        </div>
+    </div>
+</body>
+</html>
